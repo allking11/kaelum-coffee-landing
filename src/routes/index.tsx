@@ -198,6 +198,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 
 function Nav() {
   const [open, setOpen] = useState(false);
+  const { open: openReserve } = useReservation();
   const links = [
     { href: "#nosotros", label: "Nosotros" },
     { href: "#menu", label: "Menú" },
@@ -217,14 +218,12 @@ function Nav() {
               {l.label}
             </a>
           ))}
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-matcha px-5 py-2.5 text-white text-sm font-semibold shadow-sm hover:scale-[1.03] active:scale-95 transition-transform"
+          <button
+            onClick={openReserve}
+            className="inline-flex items-center gap-2 rounded-full bg-navy px-5 py-2.5 text-cream text-sm font-semibold shadow-sm hover:scale-[1.03] active:scale-95 transition-transform"
           >
-            <MessageCircle className="h-4 w-4" /> Pedir
-          </a>
+            <CalendarIcon className="h-4 w-4" /> Reservar
+          </button>
         </div>
         <button onClick={() => setOpen(!open)} className="md:hidden text-navy p-2 -mr-2" aria-label="Menú">
           {open ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
@@ -238,9 +237,12 @@ function Nav() {
                 {l.label}
               </a>
             ))}
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-matcha px-5 py-3 text-white font-semibold">
-              <MessageCircle className="h-4 w-4" /> Pedir por WhatsApp
-            </a>
+            <button
+              onClick={() => { setOpen(false); openReserve(); }}
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-5 py-3 text-cream font-semibold"
+            >
+              <CalendarIcon className="h-4 w-4" /> Reservar mesa
+            </button>
           </div>
         </div>
       )}
