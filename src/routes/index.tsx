@@ -633,15 +633,20 @@ function Footer() {
 }
 
 function Index() {
+  const [reserveOpen, setReserveOpen] = useState(false);
   return (
-    <main className="bg-cream text-navy min-h-screen">
-      <Nav />
-      <Hero />
-      <About />
-      <Menu />
-      <Reviews />
-      <Visit />
-      <Footer />
-    </main>
+    <ReservationContext.Provider value={{ open: () => setReserveOpen(true) }}>
+      <main className="bg-cream text-navy min-h-screen">
+        <Nav />
+        <Hero />
+        <About />
+        <MatchaVideo />
+        <Menu />
+        <Reviews />
+        <Visit />
+        <Footer />
+      </main>
+      <ReservationModal open={reserveOpen} onClose={() => setReserveOpen(false)} />
+    </ReservationContext.Provider>
   );
 }
