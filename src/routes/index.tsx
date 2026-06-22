@@ -611,10 +611,10 @@ function Footer() {
           <div className="text-sm">
             <p className="text-cream font-bold uppercase tracking-wider text-xs mb-4">Síguenos</p>
             <div className="flex gap-3">
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-matcha grid place-items-center transition-colors">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-mosaic grid place-items-center transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-matcha grid place-items-center transition-colors">
+              <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-mosaic grid place-items-center transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
               <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-mosaic grid place-items-center transition-colors">
