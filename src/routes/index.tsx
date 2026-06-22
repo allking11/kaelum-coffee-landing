@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Coffee, Leaf, Cookie, UtensilsCrossed, MapPin, Clock, Instagram, Facebook, Star, MessageCircle, Bike, Menu, X } from "lucide-react";
+import { Coffee, Leaf, Cookie, UtensilsCrossed, MapPin, Clock, Instagram, Facebook, Star, MessageCircle, Bike, Menu as MenuIcon, X } from "lucide-react";
 import { useState } from "react";
 import drink1 from "@/assets/drink1.jpg.asset.json";
 import clientas from "@/assets/clientas.jpg.asset.json";
@@ -30,13 +30,13 @@ const FACEBOOK_URL = "https://facebook.com/kaelumcoffee";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-};
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
+} as const;
 
 function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
     <motion.div
-      variants={fadeUp}
+      variants={fadeUp as any}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.2 }}
@@ -79,7 +79,7 @@ function Nav() {
           </a>
         </div>
         <button onClick={() => setOpen(!open)} className="md:hidden text-navy p-2 -mr-2" aria-label="Menú">
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {open ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
         </button>
       </nav>
       {open && (
