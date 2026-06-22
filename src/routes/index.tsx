@@ -531,6 +531,7 @@ function Reviews() {
 }
 
 function Visit() {
+  const { open: openReserve } = useReservation();
   return (
     <section id="visitanos" className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 grid md:grid-cols-2 gap-10 items-stretch">
@@ -566,14 +567,12 @@ function Visit() {
             </div>
 
             <div className="mt-auto pt-8 flex flex-wrap gap-3">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-matcha px-6 py-3.5 text-white font-semibold hover:scale-[1.03] active:scale-95 transition-transform"
+              <button
+                onClick={openReserve}
+                className="inline-flex items-center gap-2 rounded-full bg-mosaic px-6 py-3.5 text-white font-semibold hover:scale-[1.03] active:scale-95 transition-transform"
               >
-                <MessageCircle className="h-5 w-5" /> Pedir por WhatsApp
-              </a>
+                <CalendarIcon className="h-5 w-5" /> Reservar mesa
+              </button>
               <a
                 href="https://maps.google.com/?q=Av.+Luis+Elizondo+325E,+Alta+Vista,+Monterrey"
                 target="_blank"
@@ -618,7 +617,7 @@ function Footer() {
               <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-matcha grid place-items-center transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-matcha grid place-items-center transition-colors">
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-mosaic grid place-items-center transition-colors">
                 <MessageCircle className="h-5 w-5" />
               </a>
             </div>
