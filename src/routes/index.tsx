@@ -251,6 +251,7 @@ function Nav() {
 }
 
 function Hero() {
+  const { open: openReserve } = useReservation();
   return (
     <section id="top" className="relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 pt-10 pb-16 md:pt-20 md:pb-28 grid md:grid-cols-12 gap-10 md:gap-12 items-center">
@@ -261,7 +262,7 @@ function Hero() {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 rounded-full bg-mosaic/10 px-3 py-1.5 text-mosaic text-xs font-semibold mb-6"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-matcha animate-pulse" /> Abierto hoy · Distrito Tec
+            <span className="h-1.5 w-1.5 rounded-full bg-mosaic animate-pulse" /> Abierto hoy · Distrito Tec
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -269,7 +270,7 @@ function Hero() {
             transition={{ duration: 0.7, delay: 0.05 }}
             className="font-display text-5xl sm:text-6xl md:text-7xl font-black text-navy leading-[0.95]"
           >
-            Tu refugio de <span className="font-script font-normal text-matcha block sm:inline">inspiración</span> y buen gusto en Distrito Tec.
+            Tu refugio de <span className="font-script font-normal text-mosaic block sm:inline">inspiración</span> y buen gusto en Distrito Tec.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -285,17 +286,15 @@ function Hero() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-8 flex flex-wrap gap-3"
           >
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-matcha px-7 py-4 text-white font-semibold shadow-lg shadow-matcha/25 hover:scale-[1.03] active:scale-95 transition-transform"
+            <button
+              onClick={openReserve}
+              className="inline-flex items-center gap-2 rounded-full bg-navy px-7 py-4 text-cream font-semibold shadow-lg shadow-navy/25 hover:scale-[1.03] active:scale-95 transition-transform"
             >
-              <MessageCircle className="h-5 w-5" /> Pedir por WhatsApp
-            </a>
+              <CalendarIcon className="h-5 w-5" /> Reservar mesa
+            </button>
             <a
               href="#delivery"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-navy/15 bg-white/60 px-7 py-4 text-navy font-semibold hover:border-navy/40 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-navy/15 bg-white/60 px-7 py-4 text-navy font-semibold hover:border-mosaic transition-colors"
             >
               <Bike className="h-5 w-5" /> Apps de Delivery
             </a>
@@ -306,7 +305,7 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-10 flex items-center gap-4 text-sm text-navy/70"
           >
-            <div className="flex items-center gap-1 text-matcha">
+            <div className="flex items-center gap-1 text-mosaic">
               {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
             </div>
             <span><strong className="text-navy">4.8 / 5.0</strong> en Google · cientos de reseñas</span>
