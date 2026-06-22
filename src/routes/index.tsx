@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { Coffee, Leaf, Cookie, UtensilsCrossed, MapPin, Clock, Instagram, Facebook, Star, MessageCircle, Bike, Menu as MenuIcon, X } from "lucide-react";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Coffee, Leaf, Cookie, UtensilsCrossed, MapPin, Clock, Instagram, Facebook, Star, MessageCircle, Bike, Menu as MenuIcon, X, Users, Calendar as CalendarIcon, Minus, Plus, Send } from "lucide-react";
+import { useState, useMemo, createContext, useContext } from "react";
 import drink1 from "@/assets/drink1.jpg.asset.json";
 import clientas from "@/assets/clientas.jpg.asset.json";
 import comida from "@/assets/comida.jpg.asset.json";
@@ -9,6 +9,7 @@ import mesa from "@/assets/mesa.jpg.asset.json";
 import cookies from "@/assets/cookies.jpg.asset.json";
 import ramen from "@/assets/ramen.jpg.asset.json";
 import logo from "@/assets/logo.jpg.asset.json";
+import matchaVideo from "@/assets/matcha-prep.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,9 +25,156 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP_URL = "https://wa.me/528112345678?text=Hola%20KAELUM,%20quiero%20hacer%20un%20pedido";
+const WHATSAPP_NUMBER = "528112345678";
 const INSTAGRAM_URL = "https://instagram.com/kaelumcoffee";
 const FACEBOOK_URL = "https://facebook.com/kaelumcoffee";
+
+// ---------------- Reservation (WhatsApp checkout) ----------------
+
+type ReservationCtx = { open: () => void };
+const ReservationContext = createContext<ReservationCtx>({ open: () => {} });
+const useReservation = () => useContext(ReservationContext);
+
+function todayISO() {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+}
+
+function ReservationModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [name, setName] = useState("");
+  const [people, setPeople] = useState(2);
+  const [date, setDate] = useState(todayISO());
+  const [time, setTime] = useState("10:00");
+  const [note, setNote] = useState("");
+
+  const minDate = useMemo(() => todayISO(), []);
+  const canSubmit = name.trim().length >= 2 && people >= 1 && date && time;
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!canSubmit) return;
+    const cleanName = name.trim().slice(0, 60);
+    const cleanNote = note.trim().slice(0, 200);
+    const lines = [
+      `Hola KAELUM 👋, quiero reservar una mesa.`,
+      ``,
+      `• Nombre: ${cleanName}`,
+      `• Personas: ${people}`,
+      `• Día: ${date}`,
+      `• Hora: ${time}`,
+      cleanNote ? `• Nota: ${cleanNote}` : "",
+      ``,
+      `¿Me confirman disponibilidad? ¡Gracias!`,
+    ].filter(Boolean);
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    onClose();
+  }
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] bg-navy/60 backdrop-blur-sm grid place-items-end sm:place-items-center px-0 sm:px-5"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 40, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 220, damping: 24 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full sm:max-w-md bg-cream rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden"
+          >
+            <div className="bg-navy text-cream px-6 py-5 flex items-start justify-between">
+              <div>
+                <p className="font-script text-mosaic text-xl leading-none">reservá tu mesa</p>
+                <h3 className="font-display text-2xl font-black mt-1">Aseguramos tu lugar</h3>
+                <p className="text-cream/70 text-sm mt-1">Te confirmamos por WhatsApp en minutos.</p>
+              </div>
+              <button onClick={onClose} aria-label="Cerrar" className="text-cream/80 hover:text-cream p-1 -mr-1 -mt-1">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <form onSubmit={submit} className="p-6 space-y-4">
+              <label className="block">
+                <span className="text-navy/80 text-xs font-bold uppercase tracking-wider">Tu nombre</span>
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={60}
+                  required
+                  placeholder="¿Cómo te llamás?"
+                  className="mt-1.5 w-full rounded-xl border-2 border-navy/15 bg-white px-4 py-3 text-navy placeholder:text-navy/30 focus:border-mosaic focus:outline-none transition-colors"
+                />
+              </label>
+
+              <div>
+                <span className="text-navy/80 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"><Users className="h-3.5 w-3.5" /> Personas</span>
+                <div className="mt-1.5 flex items-center gap-3 rounded-xl border-2 border-navy/15 bg-white px-2 py-2">
+                  <button type="button" onClick={() => setPeople(Math.max(1, people - 1))} className="h-10 w-10 rounded-lg bg-navy/5 hover:bg-navy/10 grid place-items-center text-navy">
+                    <Minus className="h-4 w-4" />
+                  </button>
+                  <span className="flex-1 text-center font-display font-bold text-2xl text-navy tabular-nums">{people}</span>
+                  <button type="button" onClick={() => setPeople(Math.min(20, people + 1))} className="h-10 w-10 rounded-lg bg-navy/5 hover:bg-navy/10 grid place-items-center text-navy">
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <label className="block">
+                  <span className="text-navy/80 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"><CalendarIcon className="h-3.5 w-3.5" /> Día</span>
+                  <input
+                    type="date"
+                    value={date}
+                    min={minDate}
+                    onChange={(e) => setDate(e.target.value)}
+                    required
+                    className="mt-1.5 w-full rounded-xl border-2 border-navy/15 bg-white px-3 py-3 text-navy focus:border-mosaic focus:outline-none transition-colors"
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-navy/80 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> Hora</span>
+                  <input
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    required
+                    min="09:00"
+                    max="20:30"
+                    className="mt-1.5 w-full rounded-xl border-2 border-navy/15 bg-white px-3 py-3 text-navy focus:border-mosaic focus:outline-none transition-colors"
+                  />
+                </label>
+              </div>
+
+              <label className="block">
+                <span className="text-navy/80 text-xs font-bold uppercase tracking-wider">Nota (opcional)</span>
+                <textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  maxLength={200}
+                  rows={2}
+                  placeholder="Ocasión, preferencia de mesa…"
+                  className="mt-1.5 w-full rounded-xl border-2 border-navy/15 bg-white px-4 py-3 text-navy placeholder:text-navy/30 focus:border-mosaic focus:outline-none transition-colors resize-none"
+                />
+              </label>
+
+              <button
+                type="submit"
+                disabled={!canSubmit}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-navy px-6 py-4 text-cream font-semibold shadow-lg shadow-navy/20 hover:scale-[1.02] active:scale-95 transition-transform disabled:opacity-50 disabled:hover:scale-100"
+              >
+                <Send className="h-4 w-4" /> Enviar reserva por WhatsApp
+              </button>
+              <p className="text-center text-navy/50 text-xs">Abriremos WhatsApp con tu reserva lista para enviar.</p>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -50,6 +198,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
 
 function Nav() {
   const [open, setOpen] = useState(false);
+  const { open: openReserve } = useReservation();
   const links = [
     { href: "#nosotros", label: "Nosotros" },
     { href: "#menu", label: "Menú" },
@@ -69,14 +218,12 @@ function Nav() {
               {l.label}
             </a>
           ))}
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-matcha px-5 py-2.5 text-white text-sm font-semibold shadow-sm hover:scale-[1.03] active:scale-95 transition-transform"
+          <button
+            onClick={openReserve}
+            className="inline-flex items-center gap-2 rounded-full bg-navy px-5 py-2.5 text-cream text-sm font-semibold shadow-sm hover:scale-[1.03] active:scale-95 transition-transform"
           >
-            <MessageCircle className="h-4 w-4" /> Pedir
-          </a>
+            <CalendarIcon className="h-4 w-4" /> Reservar
+          </button>
         </div>
         <button onClick={() => setOpen(!open)} className="md:hidden text-navy p-2 -mr-2" aria-label="Menú">
           {open ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
@@ -90,9 +237,12 @@ function Nav() {
                 {l.label}
               </a>
             ))}
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-matcha px-5 py-3 text-white font-semibold">
-              <MessageCircle className="h-4 w-4" /> Pedir por WhatsApp
-            </a>
+            <button
+              onClick={() => { setOpen(false); openReserve(); }}
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-5 py-3 text-cream font-semibold"
+            >
+              <CalendarIcon className="h-4 w-4" /> Reservar mesa
+            </button>
           </div>
         </div>
       )}
@@ -101,6 +251,7 @@ function Nav() {
 }
 
 function Hero() {
+  const { open: openReserve } = useReservation();
   return (
     <section id="top" className="relative overflow-hidden">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 pt-10 pb-16 md:pt-20 md:pb-28 grid md:grid-cols-12 gap-10 md:gap-12 items-center">
@@ -111,7 +262,7 @@ function Hero() {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 rounded-full bg-mosaic/10 px-3 py-1.5 text-mosaic text-xs font-semibold mb-6"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-matcha animate-pulse" /> Abierto hoy · Distrito Tec
+            <span className="h-1.5 w-1.5 rounded-full bg-mosaic animate-pulse" /> Abierto hoy · Distrito Tec
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -119,7 +270,7 @@ function Hero() {
             transition={{ duration: 0.7, delay: 0.05 }}
             className="font-display text-5xl sm:text-6xl md:text-7xl font-black text-navy leading-[0.95]"
           >
-            Tu refugio de <span className="font-script font-normal text-matcha block sm:inline">inspiración</span> y buen gusto en Distrito Tec.
+            Tu refugio de <span className="font-script font-normal text-mosaic block sm:inline">inspiración</span> y buen gusto en Distrito Tec.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -135,17 +286,15 @@ function Hero() {
             transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-8 flex flex-wrap gap-3"
           >
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-matcha px-7 py-4 text-white font-semibold shadow-lg shadow-matcha/25 hover:scale-[1.03] active:scale-95 transition-transform"
+            <button
+              onClick={openReserve}
+              className="inline-flex items-center gap-2 rounded-full bg-navy px-7 py-4 text-cream font-semibold shadow-lg shadow-navy/25 hover:scale-[1.03] active:scale-95 transition-transform"
             >
-              <MessageCircle className="h-5 w-5" /> Pedir por WhatsApp
-            </a>
+              <CalendarIcon className="h-5 w-5" /> Reservar mesa
+            </button>
             <a
               href="#delivery"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-navy/15 bg-white/60 px-7 py-4 text-navy font-semibold hover:border-navy/40 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-navy/15 bg-white/60 px-7 py-4 text-navy font-semibold hover:border-mosaic transition-colors"
             >
               <Bike className="h-5 w-5" /> Apps de Delivery
             </a>
@@ -156,7 +305,7 @@ function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mt-10 flex items-center gap-4 text-sm text-navy/70"
           >
-            <div className="flex items-center gap-1 text-matcha">
+            <div className="flex items-center gap-1 text-mosaic">
               {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
             </div>
             <span><strong className="text-navy">4.8 / 5.0</strong> en Google · cientos de reseñas</span>
@@ -217,7 +366,7 @@ function About() {
           <Reveal>
             <p className="font-script text-mosaic text-2xl mb-3">sobre nosotros</p>
             <h2 className="font-display text-4xl sm:text-5xl font-black leading-tight mb-8">
-              Un tercer espacio donde el tiempo <span className="text-matcha">rinde y se disfruta.</span>
+              Un tercer espacio donde el tiempo <span className="text-mosaic">rinde y se disfruta.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1} className="space-y-5 text-cream/85 text-base sm:text-lg leading-relaxed">
@@ -238,7 +387,7 @@ const menuItems = [
     sub: "Matcha ceremonial batido al momento, cold brew y signature drinks.",
     img: drink1.url,
     icon: Leaf,
-    accent: "bg-matcha",
+    accent: "bg-mosaic",
     span: "md:col-span-5 md:row-span-2",
   },
   {
@@ -246,7 +395,7 @@ const menuItems = [
     sub: "All-day breakfast con nuestros famosos chilaquiles como protagonistas.",
     img: comida.url,
     icon: UtensilsCrossed,
-    accent: "bg-mosaic",
+    accent: "bg-navy",
     span: "md:col-span-7",
   },
   {
@@ -263,7 +412,7 @@ const menuItems = [
     sub: "Un platillo poco convencional que se ha vuelto culto.",
     img: ramen.url,
     icon: Coffee,
-    accent: "bg-matcha",
+    accent: "bg-mosaic",
     span: "md:col-span-3",
   },
 ];
@@ -273,7 +422,7 @@ function Menu() {
     <section id="menu" className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="max-w-2xl mb-12">
-          <p className="font-script text-matcha text-2xl mb-2">lo que servimos</p>
+          <p className="font-script text-mosaic text-2xl mb-2">lo que servimos</p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-navy leading-[1.05]">
             Una barra pensada para cada momento del día.
           </h2>
@@ -297,7 +446,7 @@ function Menu() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
                   {item.featured && (
-                    <span className="absolute top-4 right-4 rounded-full bg-matcha text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5">
+                    <span className="absolute top-4 right-4 rounded-full bg-mosaic text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5">
                       Favorito
                     </span>
                   )}
@@ -342,7 +491,7 @@ function Reviews() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="text-center max-w-2xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 mb-5 shadow-sm">
-            <div className="flex items-center gap-0.5 text-matcha">
+            <div className="flex items-center gap-0.5 text-mosaic">
               {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
             </div>
             <span className="text-navy text-sm font-bold">4.8 — 5.0 en Google</span>
@@ -359,7 +508,7 @@ function Reviews() {
                 whileHover={{ y: -4 }}
                 className="h-full rounded-3xl bg-cream p-7 shadow-sm border border-navy/5 flex flex-col"
               >
-                <div className="flex items-center gap-1 text-matcha mb-4">
+                <div className="flex items-center gap-1 text-mosaic mb-4">
                   {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
                 </div>
                 <p className="text-navy/85 leading-relaxed flex-1">"{r.text}"</p>
@@ -382,6 +531,7 @@ function Reviews() {
 }
 
 function Visit() {
+  const { open: openReserve } = useReservation();
   return (
     <section id="visitanos" className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 grid md:grid-cols-2 gap-10 items-stretch">
@@ -397,7 +547,7 @@ function Visit() {
 
             <div className="mt-8 space-y-6">
               <div className="flex gap-4">
-                <div className="h-11 w-11 shrink-0 rounded-xl bg-matcha grid place-items-center">
+                <div className="h-11 w-11 shrink-0 rounded-xl bg-mosaic grid place-items-center">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
@@ -406,7 +556,7 @@ function Visit() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="h-11 w-11 shrink-0 rounded-xl bg-mosaic grid place-items-center">
+                <div className="h-11 w-11 shrink-0 rounded-xl bg-cream/15 grid place-items-center">
                   <Clock className="h-5 w-5" />
                 </div>
                 <div>
@@ -417,14 +567,12 @@ function Visit() {
             </div>
 
             <div className="mt-auto pt-8 flex flex-wrap gap-3">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-matcha px-6 py-3.5 text-white font-semibold hover:scale-[1.03] active:scale-95 transition-transform"
+              <button
+                onClick={openReserve}
+                className="inline-flex items-center gap-2 rounded-full bg-mosaic px-6 py-3.5 text-white font-semibold hover:scale-[1.03] active:scale-95 transition-transform"
               >
-                <MessageCircle className="h-5 w-5" /> Pedir por WhatsApp
-              </a>
+                <CalendarIcon className="h-5 w-5" /> Reservar mesa
+              </button>
               <a
                 href="https://maps.google.com/?q=Av.+Luis+Elizondo+325E,+Alta+Vista,+Monterrey"
                 target="_blank"
@@ -442,6 +590,63 @@ function Visit() {
 }
 
 function Footer() {
+  return _Footer();
+}
+
+function MatchaVideo() {
+  return (
+    <section className="py-20 md:py-28 bg-cream">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 grid md:grid-cols-12 gap-10 items-center">
+        <Reveal className="md:col-span-5 order-2 md:order-1">
+          <p className="font-script text-mosaic text-2xl mb-2">el ritual</p>
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-navy leading-[1.05]">
+            Matcha batido al momento, como debe ser.
+          </h2>
+          <p className="mt-6 text-lg text-navy/75 leading-relaxed">
+            Cada taza es un pequeño ritual: matcha ceremonial, agua a punto exacto y chasen de bambú. Sin atajos, sin polvo viejo. Solo el verde, el sabor y la pausa que te merecés.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-6 text-sm">
+            <div>
+              <p className="font-display text-3xl font-black text-navy">100%</p>
+              <p className="text-navy/60">ceremonial grade</p>
+            </div>
+            <div>
+              <p className="font-display text-3xl font-black text-navy">90s</p>
+              <p className="text-navy/60">batido a mano</p>
+            </div>
+            <div>
+              <p className="font-display text-3xl font-black text-navy">+12</p>
+              <p className="text-navy/60">signature drinks</p>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={0.1} className="md:col-span-7 order-1 md:order-2">
+          <div className="relative aspect-[4/5] sm:aspect-video md:aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl shadow-navy/20 bg-navy">
+            <video
+              src={matchaVideo.url}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between text-cream">
+              <div>
+                <p className="font-script text-mosaic text-2xl leading-none">en vivo</p>
+                <p className="font-display text-xl font-bold">Preparando tu matcha</p>
+              </div>
+              <span className="rounded-full bg-cream/15 backdrop-blur px-3 py-1.5 text-xs font-semibold border border-cream/20">KAELUM bar</span>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function _Footer() {
   return (
     <footer className="bg-navy text-cream/80 pt-16 pb-10 border-t border-cream/5">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -463,13 +668,13 @@ function Footer() {
           <div className="text-sm">
             <p className="text-cream font-bold uppercase tracking-wider text-xs mb-4">Síguenos</p>
             <div className="flex gap-3">
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-matcha grid place-items-center transition-colors">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-mosaic grid place-items-center transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-matcha grid place-items-center transition-colors">
+              <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-mosaic grid place-items-center transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-matcha grid place-items-center transition-colors">
+              <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="h-11 w-11 rounded-full bg-cream/10 hover:bg-mosaic grid place-items-center transition-colors">
                 <MessageCircle className="h-5 w-5" />
               </a>
             </div>
@@ -485,15 +690,20 @@ function Footer() {
 }
 
 function Index() {
+  const [reserveOpen, setReserveOpen] = useState(false);
   return (
-    <main className="bg-cream text-navy min-h-screen">
-      <Nav />
-      <Hero />
-      <About />
-      <Menu />
-      <Reviews />
-      <Visit />
-      <Footer />
-    </main>
+    <ReservationContext.Provider value={{ open: () => setReserveOpen(true) }}>
+      <main className="bg-cream text-navy min-h-screen">
+        <Nav />
+        <Hero />
+        <About />
+        <MatchaVideo />
+        <Menu />
+        <Reviews />
+        <Visit />
+        <Footer />
+      </main>
+      <ReservationModal open={reserveOpen} onClose={() => setReserveOpen(false)} />
+    </ReservationContext.Provider>
   );
 }
