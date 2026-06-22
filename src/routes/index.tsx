@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { Coffee, Leaf, Cookie, UtensilsCrossed, MapPin, Clock, Instagram, Facebook, Star, MessageCircle, Bike, Menu as MenuIcon, X } from "lucide-react";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Coffee, Leaf, Cookie, UtensilsCrossed, MapPin, Clock, Instagram, Facebook, Star, MessageCircle, Bike, Menu as MenuIcon, X, Users, Calendar as CalendarIcon, Minus, Plus, Send } from "lucide-react";
+import { useState, useMemo, createContext, useContext } from "react";
 import drink1 from "@/assets/drink1.jpg.asset.json";
 import clientas from "@/assets/clientas.jpg.asset.json";
 import comida from "@/assets/comida.jpg.asset.json";
@@ -9,6 +9,7 @@ import mesa from "@/assets/mesa.jpg.asset.json";
 import cookies from "@/assets/cookies.jpg.asset.json";
 import ramen from "@/assets/ramen.jpg.asset.json";
 import logo from "@/assets/logo.jpg.asset.json";
+import matchaVideo from "@/assets/matcha-prep.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,9 +25,156 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WHATSAPP_URL = "https://wa.me/528112345678?text=Hola%20KAELUM,%20quiero%20hacer%20un%20pedido";
+const WHATSAPP_NUMBER = "528112345678";
 const INSTAGRAM_URL = "https://instagram.com/kaelumcoffee";
 const FACEBOOK_URL = "https://facebook.com/kaelumcoffee";
+
+// ---------------- Reservation (WhatsApp checkout) ----------------
+
+type ReservationCtx = { open: () => void };
+const ReservationContext = createContext<ReservationCtx>({ open: () => {} });
+const useReservation = () => useContext(ReservationContext);
+
+function todayISO() {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+}
+
+function ReservationModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [name, setName] = useState("");
+  const [people, setPeople] = useState(2);
+  const [date, setDate] = useState(todayISO());
+  const [time, setTime] = useState("10:00");
+  const [note, setNote] = useState("");
+
+  const minDate = useMemo(() => todayISO(), []);
+  const canSubmit = name.trim().length >= 2 && people >= 1 && date && time;
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!canSubmit) return;
+    const cleanName = name.trim().slice(0, 60);
+    const cleanNote = note.trim().slice(0, 200);
+    const lines = [
+      `Hola KAELUM 👋, quiero reservar una mesa.`,
+      ``,
+      `• Nombre: ${cleanName}`,
+      `• Personas: ${people}`,
+      `• Día: ${date}`,
+      `• Hora: ${time}`,
+      cleanNote ? `• Nota: ${cleanNote}` : "",
+      ``,
+      `¿Me confirman disponibilidad? ¡Gracias!`,
+    ].filter(Boolean);
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    onClose();
+  }
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] bg-navy/60 backdrop-blur-sm grid place-items-end sm:place-items-center px-0 sm:px-5"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 40, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 220, damping: 24 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full sm:max-w-md bg-cream rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden"
+          >
+            <div className="bg-navy text-cream px-6 py-5 flex items-start justify-between">
+              <div>
+                <p className="font-script text-mosaic text-xl leading-none">reservá tu mesa</p>
+                <h3 className="font-display text-2xl font-black mt-1">Aseguramos tu lugar</h3>
+                <p className="text-cream/70 text-sm mt-1">Te confirmamos por WhatsApp en minutos.</p>
+              </div>
+              <button onClick={onClose} aria-label="Cerrar" className="text-cream/80 hover:text-cream p-1 -mr-1 -mt-1">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <form onSubmit={submit} className="p-6 space-y-4">
+              <label className="block">
+                <span className="text-navy/80 text-xs font-bold uppercase tracking-wider">Tu nombre</span>
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={60}
+                  required
+                  placeholder="¿Cómo te llamás?"
+                  className="mt-1.5 w-full rounded-xl border-2 border-navy/15 bg-white px-4 py-3 text-navy placeholder:text-navy/30 focus:border-mosaic focus:outline-none transition-colors"
+                />
+              </label>
+
+              <div>
+                <span className="text-navy/80 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"><Users className="h-3.5 w-3.5" /> Personas</span>
+                <div className="mt-1.5 flex items-center gap-3 rounded-xl border-2 border-navy/15 bg-white px-2 py-2">
+                  <button type="button" onClick={() => setPeople(Math.max(1, people - 1))} className="h-10 w-10 rounded-lg bg-navy/5 hover:bg-navy/10 grid place-items-center text-navy">
+                    <Minus className="h-4 w-4" />
+                  </button>
+                  <span className="flex-1 text-center font-display font-bold text-2xl text-navy tabular-nums">{people}</span>
+                  <button type="button" onClick={() => setPeople(Math.min(20, people + 1))} className="h-10 w-10 rounded-lg bg-navy/5 hover:bg-navy/10 grid place-items-center text-navy">
+                    <Plus className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <label className="block">
+                  <span className="text-navy/80 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"><CalendarIcon className="h-3.5 w-3.5" /> Día</span>
+                  <input
+                    type="date"
+                    value={date}
+                    min={minDate}
+                    onChange={(e) => setDate(e.target.value)}
+                    required
+                    className="mt-1.5 w-full rounded-xl border-2 border-navy/15 bg-white px-3 py-3 text-navy focus:border-mosaic focus:outline-none transition-colors"
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-navy/80 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> Hora</span>
+                  <input
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    required
+                    min="09:00"
+                    max="20:30"
+                    className="mt-1.5 w-full rounded-xl border-2 border-navy/15 bg-white px-3 py-3 text-navy focus:border-mosaic focus:outline-none transition-colors"
+                  />
+                </label>
+              </div>
+
+              <label className="block">
+                <span className="text-navy/80 text-xs font-bold uppercase tracking-wider">Nota (opcional)</span>
+                <textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  maxLength={200}
+                  rows={2}
+                  placeholder="Ocasión, preferencia de mesa…"
+                  className="mt-1.5 w-full rounded-xl border-2 border-navy/15 bg-white px-4 py-3 text-navy placeholder:text-navy/30 focus:border-mosaic focus:outline-none transition-colors resize-none"
+                />
+              </label>
+
+              <button
+                type="submit"
+                disabled={!canSubmit}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-navy px-6 py-4 text-cream font-semibold shadow-lg shadow-navy/20 hover:scale-[1.02] active:scale-95 transition-transform disabled:opacity-50 disabled:hover:scale-100"
+              >
+                <Send className="h-4 w-4" /> Enviar reserva por WhatsApp
+              </button>
+              <p className="text-center text-navy/50 text-xs">Abriremos WhatsApp con tu reserva lista para enviar.</p>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
