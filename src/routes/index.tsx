@@ -366,7 +366,7 @@ function About() {
           <Reveal>
             <p className="font-script text-mosaic text-2xl mb-3">sobre nosotros</p>
             <h2 className="font-display text-4xl sm:text-5xl font-black leading-tight mb-8">
-              Un tercer espacio donde el tiempo <span className="text-matcha">rinde y se disfruta.</span>
+              Un tercer espacio donde el tiempo <span className="text-mosaic">rinde y se disfruta.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1} className="space-y-5 text-cream/85 text-base sm:text-lg leading-relaxed">
@@ -387,7 +387,7 @@ const menuItems = [
     sub: "Matcha ceremonial batido al momento, cold brew y signature drinks.",
     img: drink1.url,
     icon: Leaf,
-    accent: "bg-matcha",
+    accent: "bg-mosaic",
     span: "md:col-span-5 md:row-span-2",
   },
   {
@@ -395,7 +395,7 @@ const menuItems = [
     sub: "All-day breakfast con nuestros famosos chilaquiles como protagonistas.",
     img: comida.url,
     icon: UtensilsCrossed,
-    accent: "bg-mosaic",
+    accent: "bg-navy",
     span: "md:col-span-7",
   },
   {
@@ -412,7 +412,7 @@ const menuItems = [
     sub: "Un platillo poco convencional que se ha vuelto culto.",
     img: ramen.url,
     icon: Coffee,
-    accent: "bg-matcha",
+    accent: "bg-mosaic",
     span: "md:col-span-3",
   },
 ];
@@ -422,7 +422,7 @@ function Menu() {
     <section id="menu" className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="max-w-2xl mb-12">
-          <p className="font-script text-matcha text-2xl mb-2">lo que servimos</p>
+          <p className="font-script text-mosaic text-2xl mb-2">lo que servimos</p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-navy leading-[1.05]">
             Una barra pensada para cada momento del día.
           </h2>
@@ -446,7 +446,7 @@ function Menu() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
                   {item.featured && (
-                    <span className="absolute top-4 right-4 rounded-full bg-matcha text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5">
+                    <span className="absolute top-4 right-4 rounded-full bg-mosaic text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5">
                       Favorito
                     </span>
                   )}
@@ -491,7 +491,7 @@ function Reviews() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="text-center max-w-2xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 mb-5 shadow-sm">
-            <div className="flex items-center gap-0.5 text-matcha">
+            <div className="flex items-center gap-0.5 text-mosaic">
               {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
             </div>
             <span className="text-navy text-sm font-bold">4.8 — 5.0 en Google</span>
@@ -508,7 +508,7 @@ function Reviews() {
                 whileHover={{ y: -4 }}
                 className="h-full rounded-3xl bg-cream p-7 shadow-sm border border-navy/5 flex flex-col"
               >
-                <div className="flex items-center gap-1 text-matcha mb-4">
+                <div className="flex items-center gap-1 text-mosaic mb-4">
                   {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
                 </div>
                 <p className="text-navy/85 leading-relaxed flex-1">"{r.text}"</p>
@@ -546,7 +546,7 @@ function Visit() {
 
             <div className="mt-8 space-y-6">
               <div className="flex gap-4">
-                <div className="h-11 w-11 shrink-0 rounded-xl bg-matcha grid place-items-center">
+                <div className="h-11 w-11 shrink-0 rounded-xl bg-mosaic grid place-items-center">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
@@ -555,7 +555,7 @@ function Visit() {
                 </div>
               </div>
               <div className="flex gap-4">
-                <div className="h-11 w-11 shrink-0 rounded-xl bg-mosaic grid place-items-center">
+                <div className="h-11 w-11 shrink-0 rounded-xl bg-cream/15 grid place-items-center">
                   <Clock className="h-5 w-5" />
                 </div>
                 <div>
