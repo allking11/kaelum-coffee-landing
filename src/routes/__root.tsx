@@ -17,16 +17,16 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <h2 className="mt-4 text-xl font-semibold text-foreground">Página no encontrada</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          La página que estás buscando no existe o ha sido movida.
         </p>
         <div className="mt-6">
           <Link
             to="/"
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Go home
+            Ir al inicio
           </Link>
         </div>
       </div>
@@ -45,10 +45,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+          Esta página no pudo cargarse
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+          Algo salió mal de nuestro lado. Puedes intentar de nuevo o regresar al inicio.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
@@ -58,13 +58,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
-            Try again
+            Intentar de nuevo
           </button>
           <a
             href="/"
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
-            Go home
+            Ir al inicio
           </a>
         </div>
       </div>
@@ -77,16 +77,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "KAELUM Coffee Bar — Café, Matcha y Brunch en Distrito Tec, Monterrey" },
+      { name: "description", content: "Tu refugio de inspiración en Distrito Tec. Café de especialidad, matcha auténtico, brunch all-day y repostería artesanal." },
+      { name: "author", content: "KAELUM Coffee Bar" },
+      { property: "og:title", content: "KAELUM Coffee Bar — Distrito Tec, Monterrey" },
+      { property: "og:description", content: "Café de especialidad, matcha y all-day brunch en un espacio diseñado para tus mejores ideas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon.png",
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -107,7 +111,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <HeadContent />
       </head>

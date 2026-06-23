@@ -68,6 +68,7 @@
   --navy: #153C6A;
   --matcha: #86A83C;
   --mosaic: #4AA4D9;
+  --mosaic-dark: #1B74A8;
 
   --background: var(--cream);
   --foreground: var(--navy);
@@ -111,6 +112,7 @@
   --color-navy: var(--navy);
   --color-matcha: var(--matcha);
   --color-mosaic: var(--mosaic);
+  --color-mosaic-dark: var(--mosaic-dark);
 }
 
 @layer base {
@@ -159,6 +161,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   * {
     border-color: var(--color-border);
   }
