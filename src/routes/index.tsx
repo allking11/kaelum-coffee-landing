@@ -7,6 +7,7 @@ import { MatchaVideo } from "@/components/sections/MatchaVideo";
 import { Menu } from "@/components/sections/Menu";
 import { Passport } from "@/components/sections/Passport";
 import { Reviews } from "@/components/sections/Reviews";
+import { Careers } from "@/components/sections/Careers";
 import { Visit } from "@/components/sections/Visit";
 import { Footer } from "@/components/layout/Footer";
 import { ReservationModal } from "@/components/features/ReservationModal";
@@ -91,6 +92,7 @@ function Index() {
         <Menu />
         <Passport />
         <Reviews />
+        <Careers />
         <Visit />
         <Footer />
       </main>
