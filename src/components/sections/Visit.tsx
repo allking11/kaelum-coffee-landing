@@ -14,7 +14,7 @@ export function Visit() {
         <Reveal>
           <div className="relative h-[300px] sm:h-[350px] md:h-full min-h-[300px] sm:min-h-[350px] rounded-3xl overflow-hidden shadow-xl border border-navy/10 flex flex-col bg-white">
             {/* Toggle header */}
-            <div className="absolute top-4 left-4 z-10 flex gap-1 rounded-full bg-cream/90 backdrop-blur p-1 shadow-md border border-navy/5">
+            <div className="absolute top-4 right-4 z-10 flex gap-1 rounded-full bg-cream/90 backdrop-blur p-1 shadow-md border border-navy/5">
               <button
                 type="button"
                 onClick={() => setViewMode("map")}
