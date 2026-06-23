@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
-import { Leaf, UtensilsCrossed, Cookie, Coffee } from "lucide-react";
+import { Leaf, UtensilsCrossed, Cookie } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 import { useReservation } from "@/components/features/ReservationContext";
 import drink1 from "@/assets/drink1.webp";
 import comida from "@/assets/comida.webp";
 import cookies from "@/assets/cookies.webp";
-import ramen from "@/assets/ramen.webp";
 
 export function Menu() {
   const { open: openReserve } = useReservation();
@@ -35,22 +34,12 @@ export function Menu() {
       title: "Cookies Estilo NY",
       sub: "Horneadas a diario, crujientes por fuera y de corazón suave y fundido.",
       img: cookies,
-      width: 400,
+      width: 700,
       height: 400,
       icon: Cookie,
       accent: "bg-navy",
-      span: "md:col-span-4",
+      span: "md:col-span-7",
       featured: true,
-    },
-    {
-      title: "El Secreto: Ramen Kaelum",
-      sub: "Una receta reconfortante fuera de lo convencional que se ha convertido en favorita de las tardes.",
-      img: ramen,
-      width: 300,
-      height: 300,
-      icon: Coffee,
-      accent: "bg-mosaic-dark",
-      span: "md:col-span-3",
     },
   ];
 

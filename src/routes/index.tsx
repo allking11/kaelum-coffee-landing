@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "KAELUM Coffee Bar — Café, Matcha y Brunch en Distrito Tec, Monterrey" },
-      { name: "description", content: "Tu refugio de inspiración en Distrito Tec. Café de especialidad, matcha auténtico, brunch all-day, galletas NY y ramen. Abierto todos los días." },
+      { name: "description", content: "Tu refugio de inspiración en Distrito Tec. Café de especialidad, matcha auténtico, brunch all-day y galletas NY. Abierto todos los días." },
       { property: "og:title", content: "KAELUM Coffee Bar — Distrito Tec, Monterrey" },
       { property: "og:description", content: "Café de especialidad, matcha y all-day brunch en un espacio diseñado para tus mejores ideas." },
       { property: "og:image", content: logo },
