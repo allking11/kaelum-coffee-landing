@@ -69,9 +69,9 @@ export function Visit() {
         <Reveal delay={0.1}>
           <div id="delivery" className="h-full rounded-3xl bg-navy text-cream p-6 sm:p-10 flex flex-col justify-between">
             <div>
-              <p className="font-script text-mosaic-dark text-2xl mb-2">visítanos</p>
+              <p className="font-script text-mosaic-dark text-2xl mb-2">encuéntranos</p>
               <h2 className="font-display text-4xl sm:text-5xl font-black leading-tight">
-                Te esperamos en Distrito Tec.
+                Tu espacio de inspiración te espera.
               </h2>
 
               <div className="mt-8 space-y-6">
@@ -80,11 +80,11 @@ export function Visit() {
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-cream/60 text-xs uppercase tracking-wider font-bold">Dirección</p>
+                    <p className="text-cream/60 text-xs uppercase tracking-wider font-bold">Ubicación</p>
                     <p className="mt-1 font-medium">
                       Av. Luis Elizondo 325 E, Alta Vista,
                       <br />
-                      C.P. 64840, Distrito Tec, Monterrey, N.L.
+                      C.P. 64840, Monterrey, N.L. (Distrito Tec)
                     </p>
                   </div>
                 </div>
@@ -93,7 +93,7 @@ export function Visit() {
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-cream/60 text-xs uppercase tracking-wider font-bold">Horarios</p>
+                    <p className="text-cream/60 text-xs uppercase tracking-wider font-bold">Horario</p>
                     <p className="mt-1 font-medium">
                       Lunes a Sábado: 09:00 AM – 8:30 PM
                       <br />

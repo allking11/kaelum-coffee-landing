@@ -12,8 +12,8 @@ export function Menu() {
 
   const menuItems = [
     {
-      title: "Matcha Bar & Bebidas Frías",
-      sub: "Matcha ceremonial batido al momento, cold brew y signature drinks.",
+      title: "Matcha Bar & Café Especial",
+      sub: "Matcha ceremonial batido al momento, cold brew artesanal y combinaciones de autor.",
       img: drink1,
       width: 500,
       height: 625,
@@ -22,8 +22,8 @@ export function Menu() {
       span: "md:col-span-5 md:row-span-2",
     },
     {
-      title: "Desayunos & Chilaquiles",
-      sub: "All-day breakfast con nuestros famosos chilaquiles como protagonistas.",
+      title: "All-day Brunch & Chilaquiles",
+      sub: "Nuestros emblemáticos chilaquiles con totopos crujientes y salsas artesanales de la casa.",
       img: comida,
       width: 700,
       height: 400,
@@ -32,8 +32,8 @@ export function Menu() {
       span: "md:col-span-7",
     },
     {
-      title: "Nuestras Galletas NY",
-      sub: "Rellenas y horneadas a la perfección.",
+      title: "Cookies Estilo NY",
+      sub: "Horneadas a diario, crujientes por fuera y de corazón suave y fundido.",
       img: cookies,
       width: 400,
       height: 400,
@@ -43,8 +43,8 @@ export function Menu() {
       featured: true,
     },
     {
-      title: "Nuestra Estrella Oculta: Ramen",
-      sub: "Un platillo poco convencional que se ha vuelto de culto.",
+      title: "El Secreto: Ramen Kaelum",
+      sub: "Una receta reconfortante fuera de lo convencional que se ha convertido en favorita de las tardes.",
       img: ramen,
       width: 300,
       height: 300,
@@ -58,9 +58,9 @@ export function Menu() {
     <section id="menu" className="py-12 sm:py-16 md:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="max-w-2xl mb-12">
-          <p className="font-script text-mosaic-dark text-2xl mb-2">lo que servimos</p>
+          <p className="font-script text-mosaic-dark text-2xl mb-2">la propuesta</p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-navy leading-[1.05]">
-            Una barra pensada para cada momento del día.
+            Sabores honestos pensados para cada momento del día.
           </h2>
         </Reveal>
 

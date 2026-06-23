@@ -48,30 +48,23 @@ export function About() {
         </Reveal>
         <div className="md:col-span-7">
           <Reveal>
-            <p className="font-script text-mosaic-dark text-2xl mb-3">sobre nosotros</p>
+            <p className="font-script text-mosaic-dark text-2xl mb-3">el propósito</p>
             <h2 className="font-display text-4xl sm:text-5xl font-black leading-tight mb-8">
               Un tercer espacio donde el tiempo <span className="text-mosaic-dark">rinde y se disfruta.</span>
             </h2>
           </Reveal>
           <Reveal delay={0.1} className="space-y-5 text-cream/85 text-base sm:text-lg leading-relaxed">
             <p>
-              En KAELUM, nacimos con una idea muy clara: crear un espacio donde el tiempo rinde y se disfrute.
-              Más que una barra de café, fuimos diseñados para ser ese refugio perfecto dentro del Distrito
-              Tec donde la productividad, la calma y el buen gusto se encuentran.
+              Nacimos con una intención clara: redefinir tu relación con el café y el espacio. KAELUM es ese "tercer espacio" entre tu casa y tu trabajo; un refugio minimalista diseñado para que la productividad, la calma y el buen gusto coincidan en armonía.
             </p>
             <p>
-              Nuestra historia comenzó con la visión de ofrecer un ambiente de inspiración minimalista: un
-              lugar lo suficientemente amplio y acogedor como para que puedas concentrarte en tus proyectos,
-              relajarte con amigos o simplemente hacer una pausa necesaria.
+              Cada detalle de nuestra barra está pensado para acompañar tu jornada. Desde la selección de granos de especialidad hasta la precisión ceremonial de nuestro matcha batido al momento, te ofrecemos la atmósfera ideal para concentrarte en tus proyectos, platicar sin prisa o disfrutar de un respiro necesario.
             </p>
             <p>
-              Con el tiempo, fuimos moldeando nuestra identidad. Entendimos que un café de especialidad o un
-              matcha cuidadosamente preparado necesitan el acompañamiento perfecto. Por eso, sumamos a nuestra
-              barra un menú all-day breakfast —donde nuestros famosos chilaquiles son los protagonistas—, así
-              como postres artesanales y platillos poco convencionales que sorprenden el paladar.
+              Creemos en los sabores honestos hechos con cuidado. Por ello, creamos una propuesta culinaria activa todo el día —con nuestros aclamados chilaquiles como protagonistas y repostería artesanal horneada a diario— que combinan la tradición local con el toque moderno que te gusta.
             </p>
             <p className="text-cream font-medium">
-              Bienvenido a tu nuevo espacio favorito. Siéntate, conéctate y disfruta tu momento.
+              Te damos la bienvenida a tu nueva rutina favorita. Pasa, conéctate y haz que tu tiempo rinda.
             </p>
           </Reveal>
         </div>

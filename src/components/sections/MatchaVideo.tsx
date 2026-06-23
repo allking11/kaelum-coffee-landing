@@ -7,18 +7,17 @@ export function MatchaVideo() {
     <section className="py-12 sm:py-16 md:py-28 bg-cream">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 grid md:grid-cols-12 gap-10 items-center">
         <Reveal className="md:col-span-5 order-2 md:order-1">
-          <p className="font-script text-mosaic-dark text-2xl mb-2">el ritual</p>
+          <p className="font-script text-mosaic-dark text-2xl mb-2">la ceremonia</p>
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-navy leading-[1.05]">
-            Matcha batido al momento, como debe ser.
+            Matcha de origen, batido de forma tradicional.
           </h2>
           <p className="mt-6 text-lg text-navy/75 leading-relaxed">
-            Cada taza es un pequeño ritual: matcha ceremonial, agua a punto exacto y chasen de bambú. Sin
-            atajos, sin polvo viejo. Solo el verde, el sabor y la pausa que te mereces.
+            Cada taza de matcha en nuestra barra sigue un ritual consciente: hojas de té de calidad ceremonial, agua a la temperatura exacta y un batido enérgico con chasen de bambú. Sin atajos ni endulzantes artificiales. Solo pureza, antioxidantes y la energía limpia que tu día necesita.
           </p>
           <div className="mt-8 flex flex-wrap gap-6 text-sm">
             <div>
               <p className="font-display text-3xl font-black text-navy">100%</p>
-              <p className="text-navy/60">ceremonial grade</p>
+              <p className="text-navy/60">grado ceremonial</p>
             </div>
             <div>
               <p className="font-display text-3xl font-black text-navy">90s</p>
@@ -26,7 +25,7 @@ export function MatchaVideo() {
             </div>
             <div>
               <p className="font-display text-3xl font-black text-navy">+12</p>
-              <p className="text-navy/60">signature drinks</p>
+              <p className="text-navy/60">bebidas de autor</p>
             </div>
           </div>
         </Reveal>

@@ -24,11 +24,11 @@ export function Passport() {
                 </div>
                 
                 <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-black text-cream leading-tight">
-                  Colecciona tus sellos en el Pasaporte Cafetero
+                  Tu sello en la ruta del buen café
                 </h2>
                 
                 <p className="text-cream/80 text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
-                  Somos orgullosos miembros del colectivo de barras de especialidad en Monterrey. Ven por tu pasaporte a Kaelum, consume y colecciona tus sellos para obtener recompensas increíbles y explorar las mejores cafeterías de la ciudad.
+                  Somos orgullosos miembros del colectivo de barras de especialidad en Monterrey. Solicita tu Pasaporte Cafetero en nuestra barra, colecciona tus sellos en cada visita y sé parte de la comunidad apasionada por la excelencia en taza.
                 </p>
 
                 <div className="flex flex-wrap gap-4 pt-2">
@@ -36,7 +36,7 @@ export function Passport() {
                     onClick={openReserve}
                     className="inline-flex items-center justify-center rounded-full bg-matcha hover:bg-matcha/95 text-white px-7 py-3.5 font-bold shadow-md shadow-matcha/20 hover:scale-[1.03] active:scale-95 transition-transform cursor-pointer"
                   >
-                    Visítanos Hoy
+                    Obtener pasaporte
                   </button>
                   <a
                     href="https://www.regiosporelcafe.com/"
@@ -44,7 +44,7 @@ export function Passport() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center rounded-full border border-white/40 hover:border-white/80 hover:bg-white/5 text-cream px-7 py-3.5 font-bold transition-all cursor-pointer"
                   >
-                    Saber más sobre el Pasaporte
+                    Ver la ruta
                   </a>
                 </div>
               </div>

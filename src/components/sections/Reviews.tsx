@@ -9,17 +9,17 @@ export function Reviews() {
   const reviews = [
     {
       name: "Anna P. Rojas",
-      text: "Delicioso el caramel latte, muy buen balance de sabor a café con el dulce del caramelo… El lugar es amplio y tranquilo, ideal para platicar y pasar el rato.",
+      text: "Delicioso el caramel latte, balance perfecto entre el espresso y la cremosidad de la leche. El espacio es amplio, luminoso y tranquilo, ideal para platicar o concentrarse.",
       avatar: avatarAnna,
     },
     {
       name: "Paola Yazmin Rosales",
-      text: "Me encantó, es un lugar muy tranquilo para trabajar, tienen una variedad de comidas muy ricas, el servicio es increíble.",
+      text: "Me encanta venir a hacer coworking. Es súper tranquilo, tienen conexión rápida, la propuesta de brunch es espectacular y la atención de los baristas es impecable.",
       avatar: avatarPaola,
     },
     {
       name: "Fer Ruiz",
-      text: "El lugar es muy espacioso… También tienen enchufes e internet para hacer tarea o estudiar. Los chilaquiles estaban muy buenos, al igual que el mocha helado.",
+      text: "Un espacio excelente para estudiar o trabajar. Tienen conexiones en cada mesa y buen internet. Los chilaquiles son sobresalientes, igual que el espresso y el matcha frío.",
       avatar: avatarFer,
     },
   ];
@@ -53,7 +53,7 @@ export function Reviews() {
           </div>
 
           <p className="text-navy/80 text-sm sm:text-base font-medium leading-relaxed max-w-lg">
-            Calificado como uno de los mejores spots para café y coworking en Monterrey.
+            Calificado como uno de los mejores espacios para café y coworking en Monterrey.
           </p>
         </Reveal>
 

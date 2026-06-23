@@ -26,7 +26,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.05 }}
             className="font-display text-4xl sm:text-6xl md:text-7xl font-black text-navy leading-[1.0] md:leading-[0.95]"
           >
-            Tu refugio de <span className="font-script font-normal text-mosaic-dark block sm:inline">inspiración</span> y buen gusto en Distrito Tec.
+            Tu refugio de <span className="font-script font-normal text-mosaic-dark block sm:inline">inspiración</span> y buen gusto de cada día.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -52,7 +52,7 @@ export function Hero() {
               href="#delivery"
               className="inline-flex items-center gap-2 rounded-full border-2 border-navy/15 bg-white/60 px-7 py-4 text-navy font-semibold hover:border-mosaic-dark transition-colors"
             >
-              <Bike className="h-5 w-5" /> Apps de Delivery
+              <Bike className="h-5 w-5" /> Pedir a domicilio
             </a>
           </motion.div>
           <motion.div
@@ -66,7 +66,7 @@ export function Hero() {
                 <Star key={i} className="h-4 w-4 fill-current" />
               ))}
             </div>
-            <span><strong className="text-navy">4.8 / 5.0</strong> en Google · cientos de reseñas</span>
+            <span><strong className="text-navy">4.8 / 5.0</strong> en Google · cientos de mañanas perfectas</span>
           </motion.div>
         </div>
 

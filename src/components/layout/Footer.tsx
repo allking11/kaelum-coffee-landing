@@ -25,7 +25,7 @@ export function Footer() {
               </div>
             </div>
             <p className="mt-5 text-sm leading-relaxed max-w-xs">
-              Tu refugio de inspiración y buen gusto en Distrito Tec, Monterrey.
+              Tu refugio de inspiración y buen gusto de cada día.
             </p>
           </div>
           <div className="text-sm">
@@ -33,9 +33,9 @@ export function Footer() {
             <p>
               Av. Luis Elizondo 325 E, Alta Vista
               <br />
-              C.P. 64840, Distrito Tec
+              C.P. 64840, Monterrey, N.L.
               <br />
-              Monterrey, N.L.
+              (Distrito Tec)
             </p>
           </div>
           <div className="text-sm">
